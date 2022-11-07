@@ -25,6 +25,9 @@ export const userAuth = async (req, res, next) => {
     const { user } = await jwt.verify(bearerToken, process.env.SECRET_KEY);
     next();
   } catch (error) {
-    next(error);
+    res.status(HttpStatus.UNAUTHORIZED).json({
+      code: HttpStatus.UNAUTHORIZED,
+      message: `${error}`
+    });
   }
 };

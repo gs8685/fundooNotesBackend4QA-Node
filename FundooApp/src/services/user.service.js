@@ -25,10 +25,8 @@ export const login = async (body) => {
 
 //register a new user
 export const registerUser = async (body) => {
-  console.log(body.password);
   const saltRounds = 10;
   const hashPassword = await bcrypt.hash(body.password, saltRounds);
-  console.log(hashPassword);
   body.password = hashPassword;
   const data = await User.create(body);
   return data;
