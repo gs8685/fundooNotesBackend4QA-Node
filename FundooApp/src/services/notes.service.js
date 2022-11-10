@@ -7,22 +7,23 @@ export const createNote = async (body) => {
 };
 
 //get all notes
-export const getAllNotes = async () => {
-  const data = await Notes.find();
+export const getAllNotes = async (body) => {
+  const data = await Notes.find({ userID: body.userID });
   return data;
 };
 
 //get a note by id
-export const getNote = async (_id) => {
-  const data = await Notes.findOne({ _id: _id });
+export const getNote = async (body, _id) => {
+  const data = await Notes.findOne({ _id, userID: body.userID });
   return data;
 };
 
 //update a note
-export const updateNote = async (_id, body) => {
+export const updateNote = async (body, _id) => {
   const data = await Notes.findByIdAndUpdate(
     {
-      _id
+      _id,
+      userID: body.userID
     },
     body,
     {
@@ -33,14 +34,14 @@ export const updateNote = async (_id, body) => {
 };
 
 //delete a Single note
-export const deleteNote = async (id) => {
-  await Notes.findByIdAndDelete(id);
+export const deleteNote = async (body, _id) => {
+  await Notes.findByIdAndDelete({ _id, userID: body.userID });
   return '';
 };
 
 //archieve a note
-export const archiveNote = async (_id) => {
-  const note = await Notes.findOne({ _id: _id });
+export const archiveNote = async (body, _id) => {
+  const note = await Notes.findOne({ _id, userID: body.userID });
   const isArchived = note.isArchived === false ? true : false;
   const data = await Notes.findByIdAndUpdate(
     {
@@ -55,8 +56,8 @@ export const archiveNote = async (_id) => {
 };
 
 //trash a note
-export const trashNote = async (_id) => {
-  const note = await Notes.findOne({ _id: _id });
+export const trashNote = async (body, _id) => {
+  const note = await Notes.findOne({ _id: _id, userID: body.userID });
   const isTrash = note.isTrash === false ? true : false;
   const data = await Notes.findByIdAndUpdate(
     {

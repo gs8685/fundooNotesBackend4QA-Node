@@ -41,3 +41,41 @@ export const registerUser = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Controller for forgot password
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const forgotPassword = async (req, res, next) => {
+  try {
+    const data = await UserService.forgotPassword(req.body);
+    res.status(HttpStatus.CREATED).json({
+      code: HttpStatus.CREATED,
+      data: data,
+      message: 'password reset link send sucessfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Controller to reset password
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const resetPassword = async (req, res, next) => {
+  try {
+    const data = await UserService.resetPassword(req.body);
+    res.status(HttpStatus.CREATED).json({
+      code: HttpStatus.CREATED,
+      data: data,
+      message: 'password reset sucessfull'
+    });
+  } catch (error) {
+    next(error);
+  }
+};

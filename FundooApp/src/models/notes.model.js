@@ -21,6 +21,10 @@ const notesSchema = new Schema(
     isTrash: {
       type: Boolean,
       default: false
+    },
+    userID: {
+      type: String,
+      required: true
     }
   },
   {

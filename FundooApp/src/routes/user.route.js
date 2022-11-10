@@ -4,7 +4,7 @@ import {
   registerUserValidator,
   loginValidator
 } from '../validators/user.validator';
-import { userAuth } from '../middlewares/auth.middleware';
+import { userAuth, userResetAuth } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
@@ -13,5 +13,11 @@ router.post('', registerUserValidator, userController.registerUser);
 
 //route to login user
 router.post('/login', loginValidator, userController.login);
+
+//route to forget password
+router.post('/forgot', userController.forgotPassword);
+
+//route to reset password
+router.put('/reset/:token', userResetAuth, userController.resetPassword);
 
 export default router;
