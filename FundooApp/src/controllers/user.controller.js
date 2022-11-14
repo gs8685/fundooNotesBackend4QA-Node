@@ -51,8 +51,8 @@ export const registerUser = async (req, res, next) => {
 export const forgotPassword = async (req, res, next) => {
   try {
     const data = await UserService.forgotPassword(req.body);
-    res.status(HttpStatus.CREATED).json({
-      code: HttpStatus.CREATED,
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
       data: data,
       message: 'password reset link send sucessfully'
     });

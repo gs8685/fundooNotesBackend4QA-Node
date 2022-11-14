@@ -119,8 +119,8 @@ export const deleteNote = async (req, res, next) => {
 export const archiveNote = async (req, res, next) => {
   try {
     const data = await NoteService.archiveNote(req.body, req.params._id);
-    res.status(HttpStatus.ACCEPTED).json({
-      code: HttpStatus.ACCEPTED,
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
       data: data,
       message: 'note archived successfully'
     });
@@ -141,8 +141,8 @@ export const archiveNote = async (req, res, next) => {
 export const trashNote = async (req, res, next) => {
   try {
     const data = await NoteService.trashNote(req.body, req.params._id);
-    res.status(HttpStatus.ACCEPTED).json({
-      code: HttpStatus.ACCEPTED,
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
       data: data,
       message: 'note trashed successfully'
     });
