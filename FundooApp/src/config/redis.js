@@ -1,8 +1,8 @@
 import { createClient } from 'redis';
 
-const client = createClient();
+export const client = createClient();
 
-const redis = async () => {
+export const redis = async () => {
   try {
     await client.connect();
     console.log('redis client connection established');
@@ -10,5 +10,3 @@ const redis = async () => {
     console.log(error);
   }
 };
-
-export default redis;

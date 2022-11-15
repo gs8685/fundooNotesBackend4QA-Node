@@ -1,7 +1,9 @@
 import Notes from '../models/notes.model';
+import { client } from '../config/redis';
 
 //create a new note
 export const createNote = async (body) => {
+  await client.del('getAllNotes');
   const data = await Notes.create(body);
   return data;
 };
@@ -9,6 +11,7 @@ export const createNote = async (body) => {
 //get all notes
 export const getAllNotes = async (body) => {
   const data = await Notes.find({ userID: body.userID });
+  await client.set('getAllNotes', JSON.stringify(data));
   return data;
 };
 
@@ -20,6 +23,7 @@ export const getNote = async (body, _id) => {
 
 //update a note
 export const updateNote = async (body, _id) => {
+  await client.del('getAllNotes');
   const data = await Notes.findByIdAndUpdate(
     {
       _id,
@@ -41,6 +45,7 @@ export const deleteNote = async (body, _id) => {
 
 //archieve a note
 export const archiveNote = async (body, _id) => {
+  await client.del('getAllNotes');
   const note = await Notes.findOne({ _id, userID: body.userID });
   const isArchived = note.isArchived === false ? true : false;
   const data = await Notes.findByIdAndUpdate(
@@ -57,6 +62,7 @@ export const archiveNote = async (body, _id) => {
 
 //trash a note
 export const trashNote = async (body, _id) => {
+  await client.del('getAllNotes');
   const note = await Notes.findOne({ _id: _id, userID: body.userID });
   const isTrash = note.isTrash === false ? true : false;
   const data = await Notes.findByIdAndUpdate(

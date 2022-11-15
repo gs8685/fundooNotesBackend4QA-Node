@@ -1,6 +1,7 @@
 import express from 'express';
 import * as notesController from '../controllers/notes.controller';
 import { userAuth } from '../middlewares/auth.middleware';
+import { redisGet } from '../middlewares/redis.middleware';
 
 const router = express.Router();
 
@@ -8,7 +9,7 @@ const router = express.Router();
 router.post('', userAuth, notesController.createNote);
 
 //router to get all notes
-router.get('', userAuth, notesController.getAllNotes);
+router.get('', userAuth, redisGet, notesController.getAllNotes);
 
 //router to get a particular node by id
 router.get('/:_id', userAuth, notesController.getNote);
