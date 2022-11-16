@@ -6,6 +6,8 @@ import jwt from 'jsonwebtoken';
 
 import { sendMail } from '../mailservice/user.reset.password';
 
+import { producer } from '../utils/rabbitmq.producer';
+
 //login user
 export const login = async (body) => {
   const data = await User.findOne({ email: body.email });
@@ -31,6 +33,7 @@ export const registerUser = async (body) => {
   const hashPassword = await bcrypt.hash(body.password, saltRounds);
   body.password = hashPassword;
   const data = await User.create(body);
+  producer('New registration is successfull');
   return data;
 };
 

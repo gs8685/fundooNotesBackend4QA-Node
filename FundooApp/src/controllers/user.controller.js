@@ -32,6 +32,7 @@ export const login = async (req, res, next) => {
 export const registerUser = async (req, res, next) => {
   try {
     const data = await UserService.registerUser(req.body);
+    //producer('user registered successfully');
     res.status(HttpStatus.CREATED).json({
       code: HttpStatus.CREATED,
       data: data,
